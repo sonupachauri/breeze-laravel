@@ -21,7 +21,10 @@
                                       #
                                     </th>
                                     <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
-                                      Title
+                                      Post Title
+                                    </th>
+                                    <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                     Category
                                     </th>
                                     <th scope="col" class="text-sm font-medium text-gray-900 px-6 py-4 text-left">
                                       CreatedAt
@@ -32,25 +35,28 @@
                                   </tr>
                                 </thead>
                                 <tbody>
-                                    {{-- @foreach ($categories as $category)
+                                    @foreach ($posts as $post)
                                       <tr class="border-b">
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{$category->id}}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{$post->id}}</td>
                                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                          {{$category->title}}
+                                          {{$post->title}}
                                         </td>
                                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                          {{$category->created_at}}
+                                          {{$post->category->title}}
                                         </td>
                                         <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                          <a href="{{route('categories.edit',$category)}}"> Edit </a> |
-                                          <form method="POSt" action="{{route('categories.destroy',$category)}}">
+                                          {{$post->created_at}}
+                                        </td>
+                                        <td class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                          <a href="{{route('posts.edit',$post)}}"> Edit </a> |
+                                          <form method="POSt" action="{{route('posts.destroy',$post)}}">
                                              @method('delete')
                                              @csrf
                                              <button type="submit" onclick="return confirm('Are you sure!')">Delete</button>
                                           </form>
                                         </td>
                                       </tr>
-                                    @endforeach --}}
+                                    @endforeach
                                 </tbody>
                               </table>
                             </div>

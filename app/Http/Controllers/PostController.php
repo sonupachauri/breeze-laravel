@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -13,7 +15,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        return view('posts.index');
+        //$posts = Post::all();
+        $posts = Post::with('category')->orderby('id','desc')->get();
+        return view('posts.index',compact('posts'));
     }
 
     /**
@@ -23,7 +27,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        $categories= Category::all();
+        return view('posts.create',compact('categories'));
     }
 
     /**
@@ -32,9 +37,15 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Post $post)
     {
-        //
+        Post::create([
+              'title'=>$request->title,
+              'post_text'=>$request->post_text,
+              'category_id'=>$request->category_id
+        ]);
+
+        return redirect()->route('posts.index');
     }
 
     /**
@@ -54,9 +65,10 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        $categories = Category::all();
+        return view('posts.update',compact('categories','post'));
     }
 
     /**
@@ -66,9 +78,13 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $post->update([
+            'title'=>$request->title,
+            'post_text'=>$request->post_text,
+            'category_id'=>$request->category_id
+      ]);
     }
 
     /**
